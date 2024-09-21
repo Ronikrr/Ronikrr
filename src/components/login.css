@@ -1,0 +1,59 @@
+/* src/components/LoginPage.css */
+
+/* Base styles */
+.login-container {
+    max-width: 400px;
+    margin: auto;
+}
+
+/* Responsive styles */
+
+/* For screens larger than 1920px */
+@media (min-width: 1920px) {
+    .login-container {
+        max-width: 500px; /* Increase max-width for larger screens */
+    }
+}
+
+/* For screens between 1400px and 1919px */
+@media (min-width: 1400px) and (max-width: 1919px) {
+    .login-container {
+        max-width: 450px;
+    }
+}
+
+/* For screens between 1200px and 1399px */
+@media (min-width: 1200px) and (max-width: 1399px) {
+    .login-container {
+        max-width: 425px;
+    }
+}
+
+/* For screens between 992px and 1199px */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .login-container {
+        max-width: 400px;
+    }
+}
+
+/* For screens between 768px and 991px */
+@media (min-width: 768px) and (max-width: 991px) {
+    .login-container {
+        max-width: 350px;
+    }
+}
+
+/* For screens between 575px and 767px */
+@media (min-width: 575px) and (max-width: 767px) {
+    .login-container {
+        max-width: 300px;
+    }
+}
+
+/* For screens smaller than 575px */
+@media (max-width: 575px) {
+    .login-container {
+        max-width: 100%;
+        padding: 15px;
+    }
+}
