@@ -1,21 +1,6 @@
 import React, { useContext } from 'react';
 import { MdRemoveCircle } from "react-icons/md";
 import { WishlistContext } from './wishlistcontext';
-import product_1 from '../assets/image/product_1.jpg';
-import product_2 from '../assets/image/product_2.jpg';
-import product_3 from '../assets/image/product_3.jpg';
-import product_4 from '../assets/image/product_4.jpg';
-import product_5 from '../assets/image/product_5.jpg';
-
-// Mapping product 'src' fields to images
-const imageMap = {
-    'product_1': product_1,
-    'product_2': product_2,
-    'product_3': product_3,
-    'product_4': product_4,
-    'product_5': product_5,
-};
-
 
 const Wishsection = () => {
     const { wishlist, removeWishlist } = useContext(WishlistContext);
