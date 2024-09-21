@@ -81,6 +81,11 @@ function Header() {
 
         fetchProfile();
     }, [token]); // Dependency on token
+    const isLoggedIn = () => {
+        const token = localStorage.getItem('access_token'); // or check cookies
+        return token !== null; // Adjust based on your token validation logic
+    };
+
 
     return (
         <header style={{ ...headerStyle, zIndex: "10000", width: "100%" }} className="header d-flex position-fixed">
@@ -131,12 +136,8 @@ function Header() {
                                         <span className=""> {wishlist.length} </span>
                                     </span>
                                 </Link> */}
-                                {token ? profile( 
-                                        <Link className="nav-link mx-3" onClick={scrollToTop} to="/login">
-                                            Login
-                                    </Link>
-                                ) : (
-                                        <>
+                                {isLoggedIn() ? (
+                                    <>
                                         <Link className="nav-link mx-3" onClick={scrollToTop} to="/account">
                                             <FaUser />
                                         </Link>
@@ -155,7 +156,11 @@ function Header() {
                                             </span>
                                         </Link>
                                     </>
+                                ) : (
 
+                                        <Link className="btn btn-primary mx-3" onClick={scrollToTop} to="/login">
+                                            Login
+                                        </Link>
                                 )}
                             </div>
                         </div>
