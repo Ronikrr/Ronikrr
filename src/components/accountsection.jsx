@@ -10,19 +10,31 @@ const UserProfile = () => {
     const navigate = useNavigate();
     const { wishlist, removewishlist } = useContext(WishlistContext);
 
-    // useEffect(() => {
+    const handleLogout = () => {
+        console.log("Logging out...");
 
-    //     fetch(`https://api.escuelajs.co/api/v1/users/${id} `) // Adjust the path as necessary
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             setUser(data);
-    //             setLoading(false);
-    //         })
-    //         .catch(err => {
-    //             setError(err.message);
-    //             setLoading(false);
-    //         });
-    // }, []);
+        // Clear the access token
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+            localStorage.removeItem('accessToken');
+            console.log("Access token removed.");
+        } else {
+            console.log("No access token found.");
+        }
+
+        // Clear the refresh token
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (refreshToken) {
+            localStorage.removeItem('refreshToken');
+            console.log("Refresh token removed.");
+        } else {
+            console.log("No refresh token found.");
+        }
+
+        // Redirect to the login page
+        window.location.href = '/login'; // Change as needed
+    };
+
     useEffect(() => {
         const fetchuserdata = async () => {
             const accessToken = localStorage.getItem('access_token');
@@ -139,13 +151,19 @@ const UserProfile = () => {
                                 </div>
                                 <div className="mb-3">
                                     <button
-                                        type="button"  // Prevents form submission
-                                        className="btn btn-danger"  // Style as needed
-                                        onClick={handleLogout}  // Replace with your logout function
+                                        type="button"
+                                        className="btn btn-danger"
+                                        aria-label="Logout"
+                                        onClick={() => {
+                                            if (window.confirm("Are you sure you want to logout?")) {
+                                                handleLogout();
+                                            }
+                                        }}
                                     >
                                         Logout
                                     </button>
                                 </div>
+
 
                             </form>
 
