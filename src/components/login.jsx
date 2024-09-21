@@ -8,78 +8,79 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-      setLoading(true);
-      setError('');
+    setLoading(true);
+    setError('');
 
-      try {
-        const response = await fetch('YOUR_LOGIN_API_ENDPOINT', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        });
+    try {
+      const response = await fetch('YOUR_LOGIN_API_ENDPOINT', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-        if (!response.ok) {
-          throw new Error('Login failed. Please check your credentials.');
-        }
-
-        const data = await response.json();
-        localStorage.setItem('access_token', data.access_token);
-        localStorage.setItem('refresh_token', data.refresh_token);
-
-        // Fetch user data after login
-        const userData = await fetchData('YOUR_USER_DATA_ENDPOINT');
-        console.log('User data:', userData);
-
-        // Redirect to another page, e.g., the account page
-        navigate('/account'); // Change to your desired route
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+      if (!response.ok) {
+        throw new Error('Login failed. Please check your credentials.');
       }
-    };
+
+      const data = await response.json();
+      localStorage.setItem('access_token', data.access_token);
+      localStorage.setItem('refresh_token', data.refresh_token);
+
+      const userData = await fetchData('YOUR_USER_DATA_ENDPOINT');
+      console.log('User data:', userData);
+
+      navigate('/account');
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="loginbox position-relative">
-        <div className='login-container position-absolute'>
-          <h2>Login</h2>
-          <form onSubmit={handleSubmit}>
-            {error && <div className="error">{error}</div>}
-            <div>
-              <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                name='email'
-                id='email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name='password'
-                id='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <button type='submit' disabled={loading}>
-              {loading ? 'Loading...' : 'Login'}
-            </button>
-          </form>
-        </div>
+    <div className="container d-flex justify-content-center align-items-center vh-100">
+      <div className="card shadow p-4" style={{ width: '100%', maxWidth: '400px' }}>
+        <h2 className="text-center mb-4">Login</h2>
+        <form onSubmit={handleSubmit}>
+          {error && <div className="alert alert-danger" role="alert">{error}</div>}
+
+          <div className="form-group mb-3">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group mb-3">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+            {loading ? 'Loading...' : 'Login'}
+          </button>
+        </form>
       </div>
-    );
+    </div>
+  );
 };
 
 export default Login;
