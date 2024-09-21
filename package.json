@@ -2,7 +2,7 @@
   "name": "ecommer",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ronikrr.github.io/amazon",
+  "homepage": "./",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",

@@ -73,7 +73,7 @@ function Header() {
                         <div className="collapse navbar-collapse overflow-auto" id="navbarNav" style={{ maxHeight: '100%' }}>
                             <ul className="navbar-nav mx-auto mb-2 mb-lg-0 text-capitalize">
                                 <li className="nav-item">
-                                    <Link className="nav-link" onClick={scrollToTop} aria-current="page" to="/home">Home</Link>
+                                    <Link className="nav-link" onClick={scrollToTop} aria-current="page" to="/">Home</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link" onClick={scrollToTop} to="/productpage">Product</Link>
