@@ -1,59 +1,77 @@
-/* src/components/LoginPage.css */
+/* login.css */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-/* Base styles */
+.loginbox {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7f7f7;
+}
+
 .login-container {
+    width: 100%;
     max-width: 400px;
-    margin: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    padding: 20px;
 }
 
-/* Responsive styles */
+.login-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
 
-/* For screens larger than 1920px */
-@media (min-width: 1920px) {
+.form-label {
+    font-size: 14px;
+    color: #555;
+}
+
+.form-control {
+    height: 40px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.25);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.text-danger {
+    color: #dc3545;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Responsive Design 
+@media (max-width: 768px) {
     .login-container {
-        max-width: 500px; /* Increase max-width for larger screens */
+        max-width: 90%;
     }
 }
-
-/* For screens between 1400px and 1919px */
-@media (min-width: 1400px) and (max-width: 1919px) {
-    .login-container {
-        max-width: 450px;
-    }
-}
-
-/* For screens between 1200px and 1399px */
-@media (min-width: 1200px) and (max-width: 1399px) {
-    .login-container {
-        max-width: 425px;
-    }
-}
-
-/* For screens between 992px and 1199px */
-@media (min-width: 992px) and (max-width: 1199px) {
-    .login-container {
-        max-width: 400px;
-    }
-}
-
-/* For screens between 768px and 991px */
-@media (min-width: 768px) and (max-width: 991px) {
-    .login-container {
-        max-width: 350px;
-    }
-}
-
-/* For screens between 575px and 767px */
-@media (min-width: 575px) and (max-width: 767px) {
-    .login-container {
-        max-width: 300px;
-    }
-}
-
-/* For screens smaller than 575px */
-@media (max-width: 575px) {
-    .login-container {
-        max-width: 100%;
-        padding: 15px;
-    }
-}
+*/
