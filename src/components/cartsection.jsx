@@ -57,8 +57,23 @@ function Cartsection() {
                     <div className="row p-3 p-md-5">
                         {cart.length === 0 ? (
                             <div className="col-12">
-                                <p>No products in cart.</p>
+                                <table className="table table-bordered">
+                                    <thead className="thead-light">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Product Name</th>
+                                            <th>Price</th>
+                                            <th>Image</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <td colSpan="5" className='text-center'  >No products in cart.</td>
+                                    </tbody>
+                                </table>
                             </div>
+
                         ) : (
                             <div className="col-12">
                                     <table className="table table-bordered">
@@ -94,8 +109,8 @@ function Cartsection() {
                         )}
                     </div>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     );
 }
 
