@@ -1,5 +1,5 @@
 /* login.css */
-body {
+/* body {
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
@@ -8,7 +8,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-}
+} */
 
 .loginbox {
     width: 100%;
