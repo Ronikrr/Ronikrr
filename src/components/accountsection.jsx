@@ -1,27 +1,61 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { WishlistContext } from './wishlistcontext';
 import { MdRemoveCircle } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
 const id = 1;
 const UserProfile = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
     const { wishlist, removewishlist } = useContext(WishlistContext);
 
-    useEffect(() => {
-        fetch(`https://api.escuelajs.co/api/v1/users/${id} `) // Adjust the path as necessary
-            .then(response => response.json())
-            .then(data => {
-                setUser(data);
-                setLoading(false);
-            })
-            .catch(err => {
-                setError(err.message);
-                setLoading(false);
-            });
-    }, []);
+    // useEffect(() => {
 
+    //     fetch(`https://api.escuelajs.co/api/v1/users/${id} `) // Adjust the path as necessary
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             setUser(data);
+    //             setLoading(false);
+    //         })
+    //         .catch(err => {
+    //             setError(err.message);
+    //             setLoading(false);
+    //         });
+    // }, []);
+    useEffect(() => {
+        const fetchuserdata = async () => {
+            const accessToken = localStorage.getItem('access_token');
+            if (!accessToken) {
+                navigate("/login");
+                return;
+            }
+
+            try {
+                const res = await fetch(`https://api.escuelajs.co/api/v1/auth/profile`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+
+                    }
+                });
+                if (!res.ok) {
+                    throw new Error('failed to fetch user data');
+                }
+                const data = await res.json();
+                setUser(data);
+                setLoading(false)
+
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                setError(error.message);
+                setLoading(false);
+            }
+        }
+        fetchuserdata()
+    }, [navigate])
     if (loading) return <div className="loader_head">
         <div className="loader"></div>
     </div>;

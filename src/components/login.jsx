@@ -16,7 +16,7 @@ const Login = () => {
     setError('');
 
     try {
-      const response = await fetch('YOUR_LOGIN_API_ENDPOINT', {
+      const response = await fetch('https://api.escuelajs.co/api/v1/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
