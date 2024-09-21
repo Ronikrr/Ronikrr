@@ -31,7 +31,7 @@ function App() {
           <Route path="/category/:id" element={<Categories />} /> {/* Fixed route */}
           <Route path='/wishlistpage' element={<Wishlistpage />} />
           <Route path='/category/:category_id/productpage/:id/checkout/:price' element={<Checkoutpage />} />
-          {/* <Route path='*' element={<NotFound />} /> */}
+          <Route path='*' element={<NotFound />} />
         </Routes>
 
         <Footer />
