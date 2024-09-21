@@ -3,7 +3,6 @@ import { WishlistContext } from './wishlistcontext';
 import { MdRemoveCircle } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 
-const id = 1;
 const UserProfile = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -138,6 +137,16 @@ const UserProfile = () => {
                                         id="exampleFormControlInput3"
                                     />
                                 </div>
+                                <div className="mb-3">
+                                    <button
+                                        type="button"  // Prevents form submission
+                                        className="btn btn-danger"  // Style as needed
+                                        onClick={handleLogout}  // Replace with your logout function
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+
                             </form>
 
                             <h2>Orders</h2>

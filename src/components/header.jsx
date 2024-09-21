@@ -18,8 +18,8 @@ function Header() {
     });
     const scrollToTop = () => {
         window.scrollTo({
-            top:0,
-            behavior:'smooth'
+            top: 0,
+            behavior: 'smooth'
         });
     };
     useEffect(() => {
@@ -50,6 +50,36 @@ function Header() {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
+    const [profile, setProfile] = useState(null); // State to store profile data
+    const token = localStorage.getItem('token'); // Get token from localStorage
+
+    // Fetch the user profile from API
+    useEffect(() => {
+        const fetchProfile = async () => {
+            if (token) {
+                try {
+                    const res = await fetch(`https://api.escuelajs.co/api/v1/auth/profile`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                    if (res.ok) {
+                        const data = await res.json();
+                        setProfile(data); // Set the fetched profile data in state
+                    } else {
+                        console.error('Failed to fetch profile');
+                    }
+                } catch (error) {
+                    console.error('Error fetching profile:', error);
+                }
+            }
+        };
+
+        fetchProfile();
+    }, [token]); // Dependency on token
 
     return (
         <header style={{ ...headerStyle, zIndex: "10000", width: "100%" }} className="header d-flex position-fixed">
@@ -83,7 +113,7 @@ function Header() {
                                 </li>
                             </ul>
                             <div className="d-flex icons">
-                                <Link className="nav-link mx-3" onClick={scrollToTop} to="/account">
+                                {/* <Link className="nav-link mx-3" onClick={scrollToTop} to="/account">
                                     <FaUser />
                                 </Link>
                                 <Link className="nav-link mx-3 position-relative" onClick={scrollToTop} to="/cart">
@@ -99,7 +129,37 @@ function Header() {
                                         style={{ top: '8px', padding: '0px 6px', fontSize: '12px' }}>
                                         <span className=""> {wishlist.length} </span>
                                     </span>
-                                </Link>
+                                </Link> */}
+                                {token && profile ? ( // Check if the token and profile data are available
+                                    <>
+                                        <Link className="nav-link mx-3" onClick={scrollToTop} to="/login">
+                                            Login
+                                        </Link>
+
+                                    </>
+                                ) : (
+                                    <>
+                                        {/* <span className="mx-3">Logged in as: {profile.email}</span> */}
+                                        <Link className="nav-link mx-3" onClick={scrollToTop} to="/account">
+                                            <FaUser />
+                                        </Link>
+                                        <Link className="nav-link mx-3 position-relative" onClick={scrollToTop} to="/cart">
+                                            <FaCartPlus />
+                                            <span className="text-bg-primary position-absolute start-100 translate-middle border border-light rounded-circle"
+                                                style={{ top: '8px', padding: '0px 6px', fontSize: '12px' }}>
+                                                <span>{cart.length}</span>
+                                            </span>
+                                        </Link>
+                                        <Link className="nav-link mx-3 position-relative" onClick={scrollToTop} to="/wishlistpage">
+                                            <FaHeart />
+                                            <span className="text-bg-primary position-absolute start-100 translate-middle border border-light rounded-circle"
+                                                style={{ top: '8px', padding: '0px 6px', fontSize: '12px' }}>
+                                                <span>{wishlist.length}</span>
+                                            </span>
+                                        </Link>
+                                    </>
+
+                                )}
                             </div>
                         </div>
                     </div>
