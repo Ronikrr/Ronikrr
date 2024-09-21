@@ -1,23 +1,55 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Cartcontext } from './cartcontext';
 import { MdRemoveShoppingCart } from "react-icons/md";
-import product_1 from '../assets/image/product_1.jpg';
-import product_2 from '../assets/image/product_2.jpg';
-import product_3 from '../assets/image/product_3.jpg';
-import product_4 from '../assets/image/product_4.jpg';
-import product_5 from '../assets/image/product_5.jpg';
+import { useNavigate } from 'react-router-dom';
 
-// Mapping product 'src' fields to images
-const imageMap = {
-    'product_1': product_1,
-    'product_2': product_2,
-    'product_3': product_3,
-    'product_4': product_4,
-    'product_5': product_5,
-};
 function Cartsection() {
-
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
     const { cart, removecart } = useContext(Cartcontext)
+
+    useEffect(() => {
+        const fetchuserdata = async () => {
+            const accessToken = localStorage.getItem('access_token');
+            if (!accessToken) {
+                navigate("/login");
+                return;
+            }
+
+            try {
+                const res = await fetch(`https://api.escuelajs.co/api/v1/auth/profile`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+
+                    }
+                });
+                if (!res.ok) {
+                    throw new Error('failed to fetch user data');
+                }
+                const data = await res.json();
+                setUser(data);
+                setLoading(false)
+
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                setError(error.message);
+                setLoading(false);
+            }
+        }
+        fetchuserdata()
+    }, [navigate])
+    if (loading) return <div className="loader_head">
+        <div className="loader"></div>
+    </div>;
+
+
+    if (error) return <p>Error loading user data: {error.message}</p>;
+    if (!user) return <p>No user data available.</p>;
+
     return (
         <div>
             <section className="product">

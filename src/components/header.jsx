@@ -6,6 +6,8 @@ import { WishlistContext } from './wishlistcontext';
 // import './Header.css'; // Create a separate CSS file for better structure
 
 function Header() {
+    const [profile, setProfile] = useState(null); // State to store profile data
+    const token = localStorage.getItem('token'); // Get token from localStorage
     const { cart } = useContext(Cartcontext)
     const { wishlist } = useContext(WishlistContext)
     const [headerStyle, setHeaderStyle] = useState({
@@ -50,8 +52,7 @@ function Header() {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
-    const [profile, setProfile] = useState(null); // State to store profile data
-    const token = localStorage.getItem('token'); // Get token from localStorage
+
 
     // Fetch the user profile from API
     useEffect(() => {
@@ -130,16 +131,12 @@ function Header() {
                                         <span className=""> {wishlist.length} </span>
                                     </span>
                                 </Link> */}
-                                {token && profile ? ( // Check if the token and profile data are available
-                                    <>
+                                {token ? profile( 
                                         <Link className="nav-link mx-3" onClick={scrollToTop} to="/login">
                                             Login
-                                        </Link>
-
-                                    </>
+                                    </Link>
                                 ) : (
-                                    <>
-                                        {/* <span className="mx-3">Logged in as: {profile.email}</span> */}
+                                        <>
                                         <Link className="nav-link mx-3" onClick={scrollToTop} to="/account">
                                             <FaUser />
                                         </Link>

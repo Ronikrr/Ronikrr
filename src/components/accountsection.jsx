@@ -10,30 +10,16 @@ const UserProfile = () => {
     const navigate = useNavigate();
     const { wishlist, removewishlist } = useContext(WishlistContext);
 
+
     const handleLogout = () => {
-        console.log("Logging out...");
-
-        // Clear the access token
-        const accessToken = localStorage.getItem('accessToken');
-        if (accessToken) {
-            localStorage.removeItem('accessToken');
-            console.log("Access token removed.");
-        } else {
-            console.log("No access token found.");
-        }
-
-        // Clear the refresh token
-        const refreshToken = localStorage.getItem('refreshToken');
-        if (refreshToken) {
-            localStorage.removeItem('refreshToken');
-            console.log("Refresh token removed.");
-        } else {
-            console.log("No refresh token found.");
-        }
-
-        // Redirect to the login page
-        window.location.href = '/login'; // Change as needed
+        const accessToken = localStorage.removeItem('access_token');
+        if (!accessToken) {
+            navigate("/login");
+            return;
+        } // or your desired route
     };
+
+
 
     useEffect(() => {
         const fetchuserdata = async () => {
