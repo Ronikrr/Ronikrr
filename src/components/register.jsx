@@ -10,7 +10,7 @@ function Register() {
         avatar: 'null'
     })
     const [alertmessage, setalertmessage] = useState(null);
-    const [alerttype, setalertype] = useState(null);
+    const [alerttype, setaleatype] = useState(null);
 
     const handlechange = (e) => {
         const { name, value, files } = e.target;
@@ -40,43 +40,108 @@ function Register() {
         return 'user-' + Math.random().toString(36).substr(2, 9); // Simple ID generator
     };
 
-    const handlesubmit = async (e) => {
+    // const handlesubmit = async (e) => {
+    //     e.preventDefault();
+    //     if (!form.name || typeof form.name !== 'string') {
+    //         setalertmessage('Name is required and must be a string.');
+    //         setaleatype('danger');
+    //         return;
+    //     }
+
+    //     if (!form.email || !/\S+@\S+\.\S+/.test(form.email)) {
+    //         setalertmessage('Email is required and must be a valid email address.');
+    //         setaleatype('danger');
+    //         return;
+    //     }
+
+    //     if (!form.password || form.password.length < 4 || !/^[a-zA-Z0-9]+$/.test(form.password)) {
+    //         setalertmessage('Password is required, must be at least 4 characters long, and contain only letters and numbers.');
+    //         setaleatype('danger');
+    //         return;
+    //     }
+
+    //     if (!form.avatar) {
+    //         setalertmessage('Avatar file is required.');
+    //         setaleatype('danger');
+    //         return;
+    //     }
+
+    //     const id = generateId();
+    //     const payload = new FormData();
+    //     payload.append('id', id); 
+    //     payload.append('name', form.name);
+    //     payload.append('email', form.email);
+    //     payload.append('password', form.password);
+    //     payload.append('role', 'customer'); 
+    //     if (form.avatar) {
+    //         payload.append('avatar', form.avatar);
+    //     }
+
+
+    //     try {
+    //         const res = await fetch('https://api.escuelajs.co/api/v1/users/', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+
+    //             body: JSON.stringify(payload), 
+
+    //         });
+    //         if (res.ok) {
+    //             const result = await res.json();
+    //             setalertmessage('User created successfully!');
+    //             setaleatype('success');
+    //             console.log(result);
+    //             // navigate('/login');
+    //         } else {
+    //             const errorData = await res.json();
+    //             setalertmessage(`Failed to create user: ${errorData.message || 'Unknown error'}`);
+    //             setaleatype('danger');
+    //             console.error('Error details:', errorData); 
+    //         }
+    //     } catch (error) {
+    //         setalertmessage(`An error occurred: ${error.message}`);
+    //         setaleatype('danger');
+    //         console.error('Error:', error);
+    //     }
+    // }
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Validation checks
         if (!form.name || typeof form.name !== 'string') {
             setalertmessage('Name is required and must be a string.');
-            setalertype('danger');
+            setaleatype('danger');
             return;
         }
 
         if (!form.email || !/\S+@\S+\.\S+/.test(form.email)) {
             setalertmessage('Email is required and must be a valid email address.');
-            setalertype('danger');
+            setaleatype('danger');
             return;
         }
 
         if (!form.password || form.password.length < 4 || !/^[a-zA-Z0-9]+$/.test(form.password)) {
             setalertmessage('Password is required, must be at least 4 characters long, and contain only letters and numbers.');
-            setalertype('danger');
+            setaleatype('danger');
             return;
         }
 
         if (!form.avatar) {
             setalertmessage('Avatar file is required.');
-            setalertype('danger');
+            setaleatype('danger');
             return;
         }
 
         const id = generateId();
         const payload = new FormData();
-        payload.append('id', id); 
+        payload.append('id', id);
         payload.append('name', form.name);
         payload.append('email', form.email);
         payload.append('password', form.password);
-        payload.append('role', 'customer'); 
-        if (form.avatar) {
-            payload.append('avatar', form.avatar);
-        }
-
+        payload.append('role', 'customer');
+        payload.append('avatar', form.avatar); // Append the file directly
 
         try {
             const res = await fetch('https://api.escuelajs.co/api/v1/users/', {
@@ -85,27 +150,28 @@ function Register() {
                     'Content-Type': 'application/json',
                 },
 
-                body: JSON.stringify(payload), 
-
+                body: JSON.stringify(payload),
             });
+
             if (res.ok) {
                 const result = await res.json();
                 setalertmessage('User created successfully!');
-                setalertype('success');
+                setaleatype('success');
                 console.log(result);
-                // navigate('/login');
+                // Optionally navigate to another page
             } else {
                 const errorData = await res.json();
                 setalertmessage(`Failed to create user: ${errorData.message || 'Unknown error'}`);
-                setalertype('danger');
-                console.error('Error details:', errorData); 
+                setaleatype('danger');
+                console.error('Error details:', errorData);
             }
         } catch (error) {
             setalertmessage(`An error occurred: ${error.message}`);
-            setalertype('danger');
+            setaleatype('danger');
             console.error('Error:', error);
         }
-    }
+    };
+
     useEffect(() => {
         if (alerttype === 'success') {
             const timer = setTimeout(() => {
@@ -122,7 +188,7 @@ function Register() {
             <div className="container d-flex justify-content-center align-items-center vh-100">
                 <div className="card shadow p-4" style={{ width: '100%', maxWidth: '400px' }}>
                     <h2 className="text-center mb-4">Register</h2>
-                    <form onSubmit={handlesubmit} >
+                    <form onSubmit={handleSubmit} >
                         {alertmessage && (
                             <div className={`alert alert-${alerttype}`} role="alert">
                                 {alertmessage}
