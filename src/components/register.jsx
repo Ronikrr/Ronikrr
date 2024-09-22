@@ -60,11 +60,12 @@ function Register() {
             return;
         }
 
-        if (!form.avatar || !/^https?:\/\/.+/.test(form.avatar)) {
-            setalertmessage('Avatar URL is required and must be a valid URL.');
+        if (!form.avatar) {
+            setalertmessage('Avatar file is required.');
             setalertype('danger');
             return;
         }
+
         const id = generateId();
         const payload = new FormData();
         payload.append('id', id); 
