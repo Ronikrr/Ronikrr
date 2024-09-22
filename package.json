@@ -2,8 +2,8 @@
   "name": "ecommer",
   "version": "0.1.0",
   "private": true,
-  "main": "home.jsx",
-  "homepage": "./index.js",
+  "main": "index.js",
+  "homepage": "./",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
