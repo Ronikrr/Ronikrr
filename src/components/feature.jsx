@@ -41,7 +41,7 @@ function Product() {
                 <div className="container">
                     <div className="row">
                         <div className="col-12  text-capitalize text-center">
-                            <h1>product</h1>
+                            <h1>new added</h1>
                         </div>
                         <div className="col-12 d-flex flex-wrap align-items-center justify-content-center mb-5">
                             {products.length === 0 ? (

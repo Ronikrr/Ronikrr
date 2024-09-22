@@ -166,8 +166,8 @@ function Header() {
                                                 <Link type="button" className="btn btn-primary text-bg-primary " onClick={scrollToTop} to="/login" >
                                                     Login
                                                 </Link>
-                                                <Link type="button" className="btn btn-secondary text-bg-primary " onClick={scrollToTop} to="/login" >
-                                                    Right
+                                                <Link type="button" className="btn btn-secondary text-bg-primary " onClick={scrollToTop} to="/register" >
+                                                    Register
                                                 </Link>
                                             </div>
                                         </>
