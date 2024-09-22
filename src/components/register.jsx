@@ -63,7 +63,12 @@ function Register() {
                 <div className="card shadow p-4" style={{ width: '100%', maxWidth: '400px' }}>
                     <h2 className="text-center mb-4">Login</h2>
                     <form onSubmit={handlesubmit} >
-                        {/* {error && <div className="alert alert-danger" role="alert">{error}</div>} */}
+                        {alertmessage && (
+                            <div className={`alert alert-${alerttype}`} role="alert">
+                                {alertmessage}
+                            </div>
+                        )}
+
 
                         <div className="form-group my-3">
                             <label htmlFor="email">Name</label>
@@ -72,27 +77,51 @@ function Register() {
                                 className="form-control"
                                 id="name"
                                 name='name'
-                                //   value={form.name}
-                                //   onChange={(e) => setEmail(e.target.value)}
+                                value={form.name}
                                 onChange={handlechange}
                                 required
                             />
                         </div>
 
                         <div className="form-group my-3">
-                            <label htmlFor="password">Password</label>
+                            <label htmlFor="email">Email</label>
                             <input
-                                type="password"
+                                type="email"
                                 className="form-control"
-                                id="password"
-                                //   value={password}
-                                //   onChange={(e) => setPassword(e.target.value)}
+                                id="email"
+                                name='email'
+                                value={form.email}
+                                onChange={handlechange}
                                 required
                             />
                         </div>
 
+                        <div className="form-group my-3">
+                            <label htmlFor="password">Password:</label>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                value={form.password}
+                                onChange={handlechange}
+                                required
+                            />
+                        </div>
+                        <div className="form-group my-3">
+                            <label htmlFor="avatar">Avatar URL:</label>
+                            <input
+                                type="url"
+                                id="avatar"
+                                name="avatar"
+                                value={form.avatar}
+                                onChange={handlechange}
+                                required
+                            />
+
+                        </div>
+
+
                         <button type="submit" className="btn btn-primary w-100" >
-                            {/* {loading ? 'Loading...' : 'Login'} */}
                             Register
                         </button>
                         <div className="form-group text-center my-3">
