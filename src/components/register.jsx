@@ -61,7 +61,7 @@ function Register() {
         <div>
             <div className="container d-flex justify-content-center align-items-center vh-100">
                 <div className="card shadow p-4" style={{ width: '100%', maxWidth: '400px' }}>
-                    <h2 className="text-center mb-4">Login</h2>
+                    <h2 className="text-center mb-4">Register</h2>
                     <form onSubmit={handlesubmit} >
                         {alertmessage && (
                             <div className={`alert alert-${alerttype}`} role="alert">
@@ -102,6 +102,7 @@ function Register() {
                                 type="password"
                                 id="password"
                                 name="password"
+                                className='form-control'
                                 value={form.password}
                                 onChange={handlechange}
                                 required
@@ -113,6 +114,7 @@ function Register() {
                                 type="url"
                                 id="avatar"
                                 name="avatar"
+                                className='form-control'
                                 value={form.avatar}
                                 onChange={handlechange}
                                 required
