@@ -13,13 +13,22 @@ function Register() {
     const [alerttype, setalertype] = useState(null);
 
     const handlechange = (e) => {
-        const { name, value, file } = e.target;
+        const { name, value, files } = e.target;
 
         if (name === 'avatar') {
-            setformdata({
-                ...form,
-                avatar: file[0]
-            })
+            if (files && files.length > 0) {
+            // Handle file selection only if files are available
+                setformdata({
+                    ...form,
+                    avatar: files[0], // Store the selected file
+                });
+            } else {
+                // If no file is selected, you might want to clear the avatar
+                setformdata({
+                    ...form,
+                    avatar: null,
+                });
+            }
         } else {
             setformdata({
                 ...form,
@@ -27,12 +36,42 @@ function Register() {
             })
         }
     }
+    const generateId = () => {
+        return 'user-' + Math.random().toString(36).substr(2, 9); // Simple ID generator
+    };
+
     const handlesubmit = async (e) => {
         e.preventDefault();
+        if (!form.name || typeof form.name !== 'string') {
+            setalertmessage('Name is required and must be a string.');
+            setalertype('danger');
+            return;
+        }
+
+        if (!form.email || !/\S+@\S+\.\S+/.test(form.email)) {
+            setalertmessage('Email is required and must be a valid email address.');
+            setalertype('danger');
+            return;
+        }
+
+        if (!form.password || form.password.length < 4 || !/^[a-zA-Z0-9]+$/.test(form.password)) {
+            setalertmessage('Password is required, must be at least 4 characters long, and contain only letters and numbers.');
+            setalertype('danger');
+            return;
+        }
+
+        if (!form.avatar || !/^https?:\/\/.+/.test(form.avatar)) {
+            setalertmessage('Avatar URL is required and must be a valid URL.');
+            setalertype('danger');
+            return;
+        }
+        const id = generateId();
         const payload = new FormData();
+        payload.append('id', id); 
         payload.append('name', form.name);
         payload.append('email', form.email);
         payload.append('password', form.password);
+        payload.append('role', 'customer'); 
         if (form.avatar) {
             payload.append('avatar', form.avatar);
         }
@@ -41,7 +80,11 @@ function Register() {
         try {
             const res = await fetch('https://api.escuelajs.co/api/v1/users/', {
                 method: 'POST',
-                body: payload,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+
+                body: JSON.stringify(payload), 
 
             });
             if (res.ok) {
@@ -51,11 +94,13 @@ function Register() {
                 console.log(result);
                 // navigate('/login');
             } else {
-                setalertmessage('Failed to create user.');
+                const errorData = await res.json();
+                setalertmessage(`Failed to create user: ${errorData.message || 'Unknown error'}`);
                 setalertype('danger');
+                console.error('Error details:', errorData); 
             }
         } catch (error) {
-            setalertmessage('An error occurred.');
+            setalertmessage(`An error occurred: ${error.message}`);
             setalertype('danger');
             console.error('Error:', error);
         }
@@ -125,11 +170,12 @@ function Register() {
                         <div className="form-group my-3">
                             <label htmlFor="avatar">Avatar URL:</label>
                             <input
-                                type="url"
+                                type="file"
                                 id="avatar"
                                 name="avatar"
                                 className='form-control'
-                                value={form.avatar}
+                                // value={form.avatar}
+                                accept='image/*'
                                 onChange={handlechange}
                                 required
                             />
