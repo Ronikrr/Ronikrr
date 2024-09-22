@@ -157,9 +157,21 @@ function Header() {
                                         </Link>
                                     </>
                                 ) : (
+                                        <>
+                                            {/*
                                         <Link className="btn btn-primary mx-3" onClick={scrollToTop} to="/login">
                                             Login
-                                        </Link>
+                                        </Link> */}
+                                            <div className="btn-group  " role="group" aria-label="Basic example">
+                                                <Link type="button" className="btn btn-primary text-bg-primary " onClick={scrollToTop} to="/login" >
+                                                    Login
+                                                </Link>
+                                                <Link type="button" className="btn btn-secondary text-bg-primary " onClick={scrollToTop} to="/login" >
+                                                    Right
+                                                </Link>
+                                            </div>
+                                        </>
+
                                 )}
                             </div>
                         </div>
