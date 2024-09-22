@@ -1,0 +1,109 @@
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+
+function Register() {
+    const navigate = useNavigate();
+    const [form, setformdata] = useState({
+        name: '',
+        email: '',
+        password: '',
+        avatar: 'https://picsum.photos/800'
+    })
+    const [alertmessage, setalertmessage] = useState(null);
+    const [alerttype, setalertype] = useState(null);
+
+    const handlechange = (e) => {
+        const { name, value } = e.target;
+        setformdata({
+            ...form,
+            [name]: value,
+        })
+    }
+    const handlesubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await fetch('https://api.escuelajs.co/api/v1/users/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(form),
+
+            });
+            if (res.ok) {
+                const result = await res.json();
+                setalertmessage('User created successfully!');
+                setalertype('success');
+                console.log(result);
+                // navigate('/login');
+            } else {
+                setalertmessage('Failed to create user.');
+                setalertype('danger');
+            }
+        } catch (error) {
+            setalertmessage('An error occurred.');
+            setalertype('danger');
+            console.error('Error:', error);
+        }
+    }
+    useEffect(() => {
+        if (alerttype === 'success') {
+            const timer = setTimeout(() => {
+                navigate('/login');
+            }, 5000); // 5000 milliseconds = 5 seconds
+
+            // Cleanup timer on component unmount
+            return () => clearTimeout(timer);
+        }
+    }, [alerttype, navigate]);
+
+    return (
+        <div>
+            <div className="container d-flex justify-content-center align-items-center vh-100">
+                <div className="card shadow p-4" style={{ width: '100%', maxWidth: '400px' }}>
+                    <h2 className="text-center mb-4">Login</h2>
+                    <form onSubmit={handlesubmit} >
+                        {/* {error && <div className="alert alert-danger" role="alert">{error}</div>} */}
+
+                        <div className="form-group my-3">
+                            <label htmlFor="email">Name</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="name"
+                                name='name'
+                                //   value={form.name}
+                                //   onChange={(e) => setEmail(e.target.value)}
+                                onChange={handlechange}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group my-3">
+                            <label htmlFor="password">Password</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="password"
+                                //   value={password}
+                                //   onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
+
+                        <button type="submit" className="btn btn-primary w-100" >
+                            {/* {loading ? 'Loading...' : 'Login'} */}
+                            Register
+                        </button>
+                        <div className="form-group text-center my-3">
+
+                            <label htmlFor="" className='text-center' >if you registered alreday <Link to='/login'>Login</Link> </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Register

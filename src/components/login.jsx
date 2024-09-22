@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './login.css';
 import { fetchData } from './apiService';
 
@@ -50,7 +50,7 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           {error && <div className="alert alert-danger" role="alert">{error}</div>}
 
-          <div className="form-group mb-3">
+          <div className="form-group my-3">
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -62,7 +62,7 @@ const Login = () => {
             />
           </div>
 
-          <div className="form-group mb-3">
+          <div className="form-group my-3">
             <label htmlFor="password">Password</label>
             <input
               type="password"
@@ -77,6 +77,10 @@ const Login = () => {
           <button type="submit" className="btn btn-primary w-100" disabled={loading}>
             {loading ? 'Loading...' : 'Login'}
           </button>
+          <div className="form-group text-center my-3">
+
+            <label htmlFor="" className='text-center' >if you not registered  <Link to='/login'>Login</Link> </label>
+          </div>
         </form>
       </div>
     </div>

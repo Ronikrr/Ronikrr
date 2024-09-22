@@ -13,6 +13,7 @@ import Categories from './components/categoriesview';
 import Wishlistpage from './pages/wishlistpage';
 import Footer from './components/footer';
 import Login from './components/login';
+import Register from './components/register';
 import { WishlistProvider } from './components/wishlistcontext'; 
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
           <Route path='/productpage' element={<Product />} />
           <Route path='/category/:id/productpage/:id' element={<Viewpro />} />
           <Route path='/account' element={<Account />} />
@@ -42,23 +44,25 @@ function App() {
   );
 }
 
-// Component to conditionally render Header and Footer
 const ConditionalHeader = () => {
   const location = useLocation();
+  const hideHeaderRoutes = ['/login', '/register']; // Add other routes if needed
 
   return (
     <>
-      {location.pathname !== '/login' && <Header />}
-    </>
-  );
-}; const ConditionalFooter = () => {
-  const location = useLocation();
-
-  return (
-    <>
-      {location.pathname !== '/login' && <Footer />}
+      {!hideHeaderRoutes.includes(location.pathname) && <Header />}
     </>
   );
 };
 
+const ConditionalFooter = () => {
+  const location = useLocation();
+  const hideFooterRoutes = ['/login', '/register']; // Add other routes if needed
+
+  return (
+    <>
+      {!hideFooterRoutes.includes(location.pathname) && <Footer />}
+    </>
+  );
+};
 export default App;
