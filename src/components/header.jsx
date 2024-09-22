@@ -54,33 +54,39 @@ function Header() {
     }, []);
 
 
-    // Fetch the user profile from API
     useEffect(() => {
         const fetchProfile = async () => {
-            if (token) {
-                try {
-                    const res = await fetch(`https://api.escuelajs.co/api/v1/auth/profile`, {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Content-Type': 'application/json',
-                        },
-                    });
+            if (!token) return; // Skip fetch if token is null
 
-                    if (res.ok) {
-                        const data = await res.json();
-                        setProfile(data); // Set the fetched profile data in state
-                    } else {
-                        console.error('Failed to fetch profile');
-                    }
-                } catch (error) {
+            const controller = new AbortController(); // Create abort controller
+            try {
+                const res = await fetch(`https://api.escuelajs.co/api/v1/auth/profile`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    signal: controller.signal, // Pass the abort signal
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    setProfile(data);
+                } else {
+                    console.error('Failed to fetch profile');
+                }
+            } catch (error) {
+                if (error.name !== 'AbortError') {
                     console.error('Error fetching profile:', error);
                 }
             }
+
+            return () => controller.abort(); // Cleanup function to abort fetch
         };
 
         fetchProfile();
-    }, [token]); // Dependency on token
+    }, [token]);
+
     const isLoggedIn = () => {
         const token = localStorage.getItem('access_token'); // or check cookies
         return token !== null; // Adjust based on your token validation logic
@@ -136,6 +142,7 @@ function Header() {
                                         <span className=""> {wishlist.length} </span>
                                     </span>
                                 </Link> */}
+
                                 {isLoggedIn() ? (
                                     <>
                                         <Link className="nav-link mx-3" onClick={scrollToTop} to="/account">
