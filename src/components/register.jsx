@@ -7,27 +7,41 @@ function Register() {
         name: '',
         email: '',
         password: '',
-        avatar: 'https://picsum.photos/800'
+        avatar: 'null'
     })
     const [alertmessage, setalertmessage] = useState(null);
     const [alerttype, setalertype] = useState(null);
 
     const handlechange = (e) => {
-        const { name, value } = e.target;
-        setformdata({
-            ...form,
-            [name]: value,
-        })
+        const { name, value, file } = e.target;
+
+        if (name === 'avatar') {
+            setformdata({
+                ...form,
+                avatar: file[0]
+            })
+        } else {
+            setformdata({
+                ...form,
+                [name]: value,
+            })
+        }
     }
     const handlesubmit = async (e) => {
         e.preventDefault();
+        const payload = new FormData();
+        payload.append('name', form.name);
+        payload.append('email', form.email);
+        payload.append('password', form.password);
+        if (form.avatar) {
+            payload.append('avatar', form.avatar);
+        }
+
+
         try {
             const res = await fetch('https://api.escuelajs.co/api/v1/users/', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(form),
+                body: payload,
 
             });
             if (res.ok) {
