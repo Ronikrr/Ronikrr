@@ -50,7 +50,7 @@ const Wishsection = () => {
                     <div className='overlay'></div>
                     <h1 style={{ position: "relative", zIndex: 1 }}>Wishlist Page</h1>
                 </div>
-                <div className="container">
+                <div className="container py-5">
                     {user && <h2>Welcome, {user.name}</h2>} {/* Displaying user name */}
                     <div className="row p-5">
                         {wishlist.length === 0 ? (

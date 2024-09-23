@@ -56,13 +56,14 @@ function Cartsection() {
     if (error) return <p>Error loading user data: {error.message}</p>;
     if (!user) return <p>No user data available.</p>;
 
+
     return (
         <div>
             <section className="product">
                 <div className="col-12 pro_heading text-capitalize d-flex align-items-center justify-content-center">
                     <h1>Cart Page</h1>
                 </div>
-                <div className="container">
+                <div className="container py-5 ">
                     <h2>Welcome, {user.name}</h2> {/* Displaying user's name */}
                     <div className="row p-3 p-md-5">
                         {cart.length === 0 ? (
@@ -90,10 +91,10 @@ function Cartsection() {
                                         <thead className="thead-light">
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Product Name</th>
-                                                <th>Price</th>
                                                 <th>Image</th>
                                                 <th>Quantity</th>
+                                                <th>Product Name</th>
+                                                <th>Price</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -119,7 +120,7 @@ function Cartsection() {
                                                         </button>
                                                     </td>
                                                     <td>{item.title}</td>
-                                                    <td>Rs.{item.price}</td>
+                                                    <td>Rs.{item.price * quantity}</td>
                                                 <td>
                                                     <button className='border' onClick={() => removecart(item.id)}>
                                                         <MdRemoveShoppingCart />
