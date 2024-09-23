@@ -1,16 +1,26 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 import { Cartcontext } from './cartcontext';
+import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdRemoveShoppingCart } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 
 function Cartsection() {
+    const [quantity, setQuantity] = useState(1);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const { cart, removecart } = useContext(Cartcontext);
+    const handleDecrease = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+        }
+    };
 
+    const handleIncrease = () => {
+        setQuantity(quantity + 1);
+    };
     useEffect(() => {
         const fetchUserData = async () => {
             const accessToken = localStorage.getItem('access_token');
@@ -92,6 +102,20 @@ function Cartsection() {
                                                     <td>{item.id}</td>
                                                     <td>
                                                         <img src={item.images} alt={item.title} style={{ width: '100px', height: 'auto' }} />
+                                                    </td>
+                                                    <td className="input-group mb-3" style={{ width: 170 }}>
+                                                        <button className="btn btn-white border border-secondary px-3" type="button" onClick={handleDecrease}>
+                                                            <FaMinus />
+                                                        </button>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control text-center border border-secondary"
+                                                            value={quantity}
+                                                            readOnly
+                                                        />
+                                                        <button className="btn btn-white border border-secondary px-3" type="button" onClick={handleIncrease}>
+                                                            <FaPlus />
+                                                        </button>
                                                     </td>
                                                     <td>{item.title}</td>
                                                     <td>Rs.{item.price}</td>

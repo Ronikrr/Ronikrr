@@ -14,7 +14,7 @@ const UserProfile = () => {
     const handleLogout = () => {
         const accessToken = localStorage.removeItem('access_token');
         if (!accessToken) {
-            navigate("/login");
+            navigate("/");
             return;
         } // or your desired route
     };
