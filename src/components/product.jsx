@@ -6,6 +6,7 @@ import { Cartcontext } from './cartcontext';
 
 
 
+
 function Product() {
     const [products, setProducts] = useState([]);
     const { addtocart } = useContext(Cartcontext)

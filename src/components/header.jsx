@@ -87,6 +87,8 @@ function Header() {
         fetchProfile();
     }, [token]);
 
+    const items = cart?.items || [];  // Safely handle cart items
+    const wishlistItems = wishlist?.items || [];  // Safely handle wishlist items
     const isLoggedIn = () => {
         const token = localStorage.getItem('access_token'); // or check cookies
         return token !== null; // Adjust based on your token validation logic
@@ -144,24 +146,28 @@ function Header() {
                                 </Link> */}
 
                                 {isLoggedIn() ? (
+
                                     <>
                                         <Link className="nav-link mx-3" onClick={scrollToTop} to="/account">
                                             <FaUser />
                                         </Link>
+
                                         <Link className="nav-link mx-3 position-relative" onClick={scrollToTop} to="/cart">
                                             <FaCartPlus />
                                             <span className="text-bg-primary position-absolute start-100 translate-middle border border-light rounded-circle"
                                                 style={{ top: '8px', padding: '0px 6px', fontSize: '12px' }}>
-                                                <span>{cart.length}</span>
+                                                <span>{cart.length}</span> {/* Safely access cart length */}
                                             </span>
                                         </Link>
+
                                         <Link className="nav-link mx-3 position-relative" onClick={scrollToTop} to="/wishlistpage">
                                             <FaHeart />
                                             <span className="text-bg-primary position-absolute start-100 translate-middle border border-light rounded-circle"
                                                 style={{ top: '8px', padding: '0px 6px', fontSize: '12px' }}>
-                                                <span>{wishlist.length}</span>
+                                                <span>{wishlist.length}</span> {/* Safely access wishlist length */}
                                             </span>
                                         </Link>
+
                                     </>
                                 ) : (
                                         <>

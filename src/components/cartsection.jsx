@@ -9,7 +9,7 @@ function Cartsection() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    const { cart, removeFromCart } = useContext(Cartcontext);
+    const { cart, removecart } = useContext(Cartcontext);
 
     // Initialize quantities state
     const [quantities, setQuantities] = useState({});
@@ -128,7 +128,7 @@ function Cartsection() {
                                                     <td>{item.title}</td>
                                                     <td>Rs.{item.price * quantity}</td>
                                                         <td>
-                                                        <button className='border' onClick={() => removeFromCart(item.id)}>
+                                                            <button className='border' onClick={() => removecart(item.id)}>
                                                                 <MdRemoveShoppingCart />
                                                             </button>
                                                             <button className='btn btn-primary ms-2'>Buy Now</button>
@@ -148,4 +148,102 @@ function Cartsection() {
 }
 
 export default Cartsection;
+// import React, { useState } from 'react';
+// import { RxCross2 } from "react-icons/rx";
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import { Link, useNavigate } from 'react-router-dom';
+// import { useCart } from './cartcontext'; // Import the custom hook
 
+// const Cartscreen = () => {
+//     const [user, setUser] = useState(null);
+//     const [loading, setLoading] = useState(true);
+//     const [error, setError] = useState(null);
+//     const navigate = useNavigate();
+//     const { state: cart, dispatch } = useCart();
+
+//     const [quantities, setQuantities] = useState(
+//         cart.items.reduce((acc, item) => ({ ...acc, [item.id]: item.quantity }), {})
+//     );
+
+//     const handleQuantityChange = (id, value) => {
+//         const newQuantity = Math.max(1, value);
+//         setQuantities((prev) => ({ ...prev, [id]: newQuantity }));
+//         dispatch({ type: 'UPDATE_ITEM_QUANTITY', payload: { id, quantity: newQuantity } });
+//     };
+
+//     const handleRemoveItem = (id) => {
+//         dispatch({ type: 'REMOVE_ITEM', payload: id });
+//     };
+
+//     return (
+//         <div className="cartscreen  ">
+//             <div className="col-12 pro_heading text-capitalize d-flex align-items-center justify-content-center">
+//                 <div className='overlay'></div>
+//                 <h1 style={{ position: "relative", zIndex: 1 }}>Wishlist Page</h1>
+//             </div>
+
+//             <div className='col-12 container py-5'>
+//                 <div className="table-responsive ">
+//                     <table className="table table-striped mb-5">
+//                         <thead>
+//                             <tr className='table_heading'>
+//                                 <th scope="col" className='p-3 p-md-4 border-0 product_heading fw-normal'>Product</th>
+//                                 <th scope="col" className='p-3 p-md-4 border-0 fw-normal'>Price</th>
+//                                 <th scope="col" className='p-3 p-md-4 border-0 fw-normal col-9 d-flex'>Quantity</th>
+//                                 <th className='p-sm-4 border-bottom-0 radius_right'>Total Price</th>
+//                             </tr>
+//                         </thead>
+//                         <tbody className='col-12'>
+//                             {cart.items.map((order) => (
+//                                 <tr key={order.id} className='border col-12'>
+//                                     <th className='pe-3 pe-sm-4 py-3 py-md-4 ps-2 d-flex align-items-center border-bottom-0 fw-normal'>
+//                                         <Link to="#" className='text-black' onClick={() => handleRemoveItem(order.id)}>
+//                                             <RxCross2 className='me-2' />
+//                                         </Link>
+//                                         <span className='d-flex me-3 rounded-1'></span>{order.name}
+//                                     </th>
+//                                     <td className='p-3 p-md-4'>₹{order.price}</td>
+//                                     <td className='px-2 px-sm-3 px-md-4 py-3 col-4 col-md-3 col-xxl-2'>
+//                                         <div className="quantity_main_box col-8 border rounded-pill d-flex justify-content-center">
+//                                             <button
+//                                                 className='border-0 bg-transparent fs-3'
+//                                                 onClick={() => handleQuantityChange(order.id, quantities[order.id] - 1)}
+//                                             >
+//                                                 -
+//                                             </button>
+//                                             <input
+//                                                 className='col-5 border-0 text-center'
+//                                                 type="number"
+//                                                 value={quantities[order.id]}
+//                                                 onChange={(e) => handleQuantityChange(order.id, Number(e.target.value))}
+//                                             />
+//                                             <button
+//                                                 className='border-0 bg-transparent'
+//                                                 onClick={() => handleQuantityChange(order.id, quantities[order.id] + 1)}
+//                                             >
+//                                                 +
+//                                             </button>
+//                                         </div>
+//                                     </td>
+//                                     <td className='p-3 p-md-4 d-flex justify-content-center border-bottom-0'>
+//                                         ₹{(order.price * quantities[order.id]).toFixed(2)}
+//                                     </td>
+//                                 </tr>
+//                             ))}
+//                         </tbody>
+//                     </table>
+//                 </div>
+//                 <table className="table mb-0">
+//                     <thead>
+//                         <tr className='table_heading'>
+//                             <th className='py-4 product_heading'>Total Quantity: {cart.totalQuantity}</th>
+//                             <th className='py-4 text-end'>Total Price: {cart.totalPrice}</th>
+//                         </tr>
+//                     </thead>
+//                 </table>
+//                 <button className='addtocartbtn p-4 border-0 border_radius_left'>Proceed To Checkout</button>
+//             </div>
+//         </div>
+//     );
+// };
+// export default Cartscreen;
