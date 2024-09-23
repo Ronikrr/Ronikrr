@@ -46,7 +46,7 @@ function App() {
 
 const ConditionalHeader = () => {
   const location = useLocation();
-  const hideHeaderRoutes = ['/login', '/register']; // Add other routes if needed
+  const hideHeaderRoutes = ['/login', '/register', '*']; // Add other routes if needed
 
   return (
     <>
@@ -57,7 +57,7 @@ const ConditionalHeader = () => {
 
 const ConditionalFooter = () => {
   const location = useLocation();
-  const hideFooterRoutes = ['/login', '/register']; // Add other routes if needed
+  const hideFooterRoutes = ['/login', '/register', '*']; // Add other routes if needed
 
   return (
     <>
