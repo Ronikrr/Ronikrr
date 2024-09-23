@@ -11,6 +11,9 @@ function ProductPage() {
     const { addtocart } = useContext(Cartcontext);
     const { addToWishlist } = useContext(WishlistContext);
     const { id } = useParams();
+    // const handleAddToCart = (product) => {
+    //     addtocart(product);
+    // }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,7 +45,7 @@ function ProductPage() {
         return <div>Loading...</div>; // Show a loading state
     }
 
-    const { title, images, price, description, category, rating } = product;
+    const { title, images, price, description, category } = product;
 
     return (
         <div>

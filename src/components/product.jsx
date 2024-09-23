@@ -17,6 +17,9 @@ function Product() {
             behavior:'smooth'
         });
     };
+    const handleAddToCart = (product) => {
+        addtocart(product);
+    }
 
     useEffect(() => {
         const fetchdata = async () => {
@@ -57,7 +60,7 @@ function Product() {
                                                 ${v.price}
                                             </p>
                                             <div className="button-group d-flex align-items-center justify-content-center w-100">
-                                                <Link onClick={() => addtocart(v)} className='box border-0 mx-1 text-bg-light' >
+                                                <Link onClick={() => handleAddToCart(v)} className='box border-0 mx-1 text-bg-light' >
                                                     <FaCartArrowDown />
                                                 </Link>
                                                 <Link to={`/productpage/${v.id}`} className='box border-0 mx-1 text-bg-light' >

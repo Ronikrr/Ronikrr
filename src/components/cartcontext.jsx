@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-// import { login } from './login'
 export const Cartcontext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -24,27 +23,28 @@ export const CartProvider = ({ children }) => {
         }
     }, [userId])
 
-    const addtocart = (product) => {
-        const currentuserid = userId || localStorage.getItem('id');
+    const addTocart = (product) => {
+        const currentUserId = userId; // Use userId from URL
+        const appendedProduct = { ...product, userId: currentUserId };
 
-
-        const appededPro = { ...product, userId: currentuserid }
-        setcart((prevcart) => {
-            const updatedCart = [...prevcart, appededPro];
+        setcart((prevCart) => {
+            const updatedCart = [...prevCart, appendedProduct];
             localStorage.setItem("cart", JSON.stringify(updatedCart));
-            return updatedCart
+            return updatedCart;
         });
-
     };
 
     const removecart = (productid) => {
-        const newCart = cart.filter((product) => product.id !== productid);
-        setcart(newCart);
-        localStorage.setItem("cart", JSON.stringify(newCart));
+        setcart((prevCart) => {
+            const newCart = prevCart.filter(product => product.id !== productid); // Filter out the product
+            localStorage.setItem("cart", JSON.stringify(newCart)); // Update localStorage
+            return newCart;
+        });
+
     }
 
     return (
-        <Cartcontext.Provider value={{ cart, addtocart, removecart }} >
+        <Cartcontext.Provider value={{ cart, addTocart, removecart }} >
             {children}
         </Cartcontext.Provider>
     )
