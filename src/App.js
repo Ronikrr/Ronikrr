@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/header';
 import Home from './pages/home';
-import Product from './pages/productpage';
+import Product from './pages/productpage'; // Assuming this is the correct import
 import Account from './pages/account';
 import CategoryPage from './pages/categories';
 import Viewpro from './components/viewproduct';
@@ -14,39 +14,45 @@ import Wishlistpage from './pages/wishlistpage';
 import Footer from './components/footer';
 import Login from './components/login';
 import Register from './components/register';
-import { WishlistProvider } from './components/wishlistcontext'; 
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { WishlistProvider } from './components/wishlistcontext';
+import { CartProvider } from './components/cartcontext';
+import { BrowserRouter as Router, Route, Routes, useLocation, useParams } from 'react-router-dom';
 
 function App() {
   return (
     <Router>
-      <WishlistProvider> 
-        {/* Conditionally render Header and Footer based on the current path */}
-        <ConditionalHeader />
-
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/productpage' element={<Product />} />
-          <Route path='/category/:id/productpage/:id' element={<Viewpro />} />
-          <Route path='/account' element={<Account />} />
-          <Route path='/cart' element={<Cart />} />
-          <Route path='/category' element={<CategoryPage />} />
-          <Route path='/category/:id' element={<Categories />} />
-          <Route path='/wishlistpage' element={<Wishlistpage />} />
-          <Route path='/category/:category_id/productpage/:id/checkout/:price' element={<Checkoutpage />} />
-          <Route path='*' element={<NotFound />} />
-        </Routes>
-        <ConditionalFooter />
-      </WishlistProvider>
-    </Router>
-  );
+      <WishlistProvider>
+          <CartProvider>
+            <ConditionalHeader />
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/productpage/:userId' element={<ProductWrapper />} /> {/* Route with userId */}
+              <Route path='/category/:id/productpage/:id' element={<Viewpro />} />
+              <Route path='/account' element={<Account />} />
+              <Route path='/cart' element={<Cart />} />
+              <Route path='/category' element={<CategoryPage />} />
+              <Route path='/category/:id' element={<Categories />} />
+              <Route path='/wishlistpage' element={<Wishlistpage />} />
+              <Route path='/category/:category_id/productpage/:id/checkout/:price' element={<Checkoutpage />} />
+              <Route path='*' element={<NotFound />} />
+            </Routes>
+            <ConditionalFooter />
+          </CartProvider>
+        </WishlistProvider>
+      </Router>
+    );
 }
+
+const ProductWrapper = () => {
+  const { userId } = useParams(); // Get userId from URL
+  return <Product userId={userId} />; // Pass userId as prop to Product
+};
 
 const ConditionalHeader = () => {
   const location = useLocation();
-  const hideHeaderRoutes = ['/login', '/register', '*']; // Add other routes if needed
+  const hideHeaderRoutes = ['/login', '/register', '*'];
 
   return (
     <>
@@ -57,7 +63,7 @@ const ConditionalHeader = () => {
 
 const ConditionalFooter = () => {
   const location = useLocation();
-  const hideFooterRoutes = ['/login', '/register', '*']; // Add other routes if needed
+  const hideFooterRoutes = ['/login', '/register', '*'];
 
   return (
     <>
@@ -65,4 +71,5 @@ const ConditionalFooter = () => {
     </>
   );
 };
+
 export default App;

@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCartArrowDown, FaRegEye, FaExchangeAlt, FaHeart } from 'react-icons/fa';
 import { WishlistContext } from './wishlistcontext'
-import { Cartcontext } from './cartcontext';
+import { Cartcontext, useCart } from './cartcontext';
 
 
-function Productpagesection() {
+const Productpagesection = ({ userId }) => {
     const [products, setProducts] = useState([]);
-    const { addtocart } = useContext(Cartcontext)
+    const { addtocart } = useCart()
     const { addToWishlist } = useContext(WishlistContext);
     useEffect(() => {
         const fetchdata = async () => {
@@ -49,7 +49,7 @@ function Productpagesection() {
                                                 ${v.price}
                                             </p>
                                             <div className="button-group d-flex align-items-center justify-content-center w-100">
-                                                <Link onClick={() => addtocart(v)} className='box border-0 mx-1 text-bg-light' >
+                                                <Link onClick={() => addtocart(userId, v)} className='box border-0 mx-1 text-bg-light' >
                                                     <FaCartArrowDown />
                                                 </Link>
                                                 <Link to={`/category/${v.category.id}/productpage/${v.id}`} className='box border-0 mx-1 text-bg-light' >

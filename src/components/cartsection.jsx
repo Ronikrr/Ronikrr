@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Cartcontext } from './cartcontext';
+import { Cartcontext, useCart } from './cartcontext';
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdRemoveShoppingCart } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 
-function Cartsection() {
+const Cartsection = ({ userId }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    const { cart, removecart } = useContext(Cartcontext);
+    // const { cart, removecart } = useContext(Cartcontext);
+    const { removeFromCart, getCartItems } = useCart();
+    const cartItems = getCartItems(userId);
 
     // Initialize quantities state
     const [quantities, setQuantities] = useState({});
@@ -72,7 +74,7 @@ function Cartsection() {
                 <div className="container py-5">
                     <h2>Welcome, {user.name}</h2>
                     <div className="row p-3 p-md-5">
-                        {cart.length === 0 ? (
+                        {cartItems.length === 0 ? (
                             <div className="col-12">
                                 <table className="table table-bordered">
                                     <thead className="thead-light">
@@ -103,7 +105,7 @@ function Cartsection() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {cart.map((item) => {
+                                            {cartItems.map((item) => {
                                                 const quantity = quantities[item.id] || 1; // Use the current quantity
                                                 return (
                                                 <tr key={item.id}>
@@ -128,7 +130,7 @@ function Cartsection() {
                                                     <td>{item.title}</td>
                                                     <td>Rs.{item.price * quantity}</td>
                                                         <td>
-                                                            <button className='border' onClick={() => removecart(item.id)}>
+                                                            <button className='border' onClick={() => removeFromCart(userId, item.id)}>
                                                                 <MdRemoveShoppingCart />
                                                             </button>
                                                             <button className='btn btn-primary ms-2'>Buy Now</button>

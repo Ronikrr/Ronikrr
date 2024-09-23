@@ -2,14 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaCartArrowDown, FaRegEye, FaExchangeAlt, FaHeart } from 'react-icons/fa';
 import { WishlistContext } from './wishlistcontext'
-import { Cartcontext } from './cartcontext';
+import { useCart } from './cartcontext';
 
 
 
 
-function Product() {
+function Product({ userId }) {
     const [products, setProducts] = useState([]);
-    const { addtocart } = useContext(Cartcontext)
+    const { addToCart } = useCart();
     const { addToWishlist } = useContext(WishlistContext);
     const scrollToTop = () => {
         window.scrollTo({
@@ -17,9 +17,6 @@ function Product() {
             behavior:'smooth'
         });
     };
-    const handleAddToCart = (product) => {
-        addtocart(product);
-    }
 
     useEffect(() => {
         const fetchdata = async () => {
@@ -60,7 +57,7 @@ function Product() {
                                                 ${v.price}
                                             </p>
                                             <div className="button-group d-flex align-items-center justify-content-center w-100">
-                                                <Link onClick={() => handleAddToCart(v)} className='box border-0 mx-1 text-bg-light' >
+                                                <Link onClick={addToCart(userId, v)} className='box border-0 mx-1 text-bg-light' >
                                                     <FaCartArrowDown />
                                                 </Link>
                                                 <Link to={`/productpage/${v.id}`} className='box border-0 mx-1 text-bg-light' >

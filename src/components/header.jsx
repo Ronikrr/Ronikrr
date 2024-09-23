@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FaUser, FaCartPlus, FaHeart } from "react-icons/fa";
 import { Link } from 'react-router-dom'
-import { Cartcontext } from './cartcontext';
+import { useCart } from './cartcontext';
 import { WishlistContext } from './wishlistcontext';
 // import './Header.css'; // Create a separate CSS file for better structure
 
 function Header() {
     const [profile, setProfile] = useState(null); // State to store profile data
     const token = localStorage.getItem('token'); // Get token from localStorage
-    const { cart } = useContext(Cartcontext)
+    const { cart } = useCart()
     const { wishlist } = useContext(WishlistContext)
     const [headerStyle, setHeaderStyle] = useState({
         height: '100px',

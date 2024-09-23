@@ -3,17 +3,18 @@ import { useParams, Link } from 'react-router-dom';
 import { FaStar, FaStarHalfAlt, FaMinus, FaPlus } from "react-icons/fa";
 import { CiHeart } from "react-icons/ci";
 import { WishlistContext } from './wishlistcontext';
-import { Cartcontext } from './cartcontext';
+import { useCart } from './cartcontext';
 
-function ProductPage() {
+const ProductPage = ({ userId }) => {
     const [quantity, setQuantity] = useState(1);
     const [product, setProduct] = useState(null); // Change to single product
-    const { addtocart } = useContext(Cartcontext);
+    const { addtocart } = useCart(); // 
     const { addToWishlist } = useContext(WishlistContext);
     const { id } = useParams();
-    // const handleAddToCart = (product) => {
-    //     addtocart(product);
-    // }
+
+
+
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -112,7 +113,7 @@ function ProductPage() {
                                 </div>
                                 <div className="d-flex align-items-center">
                                     <Link to={`/productpage/${product.id}/checkout/${price}`} className="btn btn-warning shadow-0 me-2">Buy now</Link>
-                                    <Link className="btn btn-primary shadow-0 me-2" onClick={() => addtocart(product)}>
+                                    <Link className="btn btn-primary shadow-0 me-2" onClick={() => addtocart(userId, product)}>
                                         Add to cart
                                     </Link>
                                     <Link onClick={() => addToWishlist(product)} className="btn btn-light border border-secondary p-2 icon-hover">
