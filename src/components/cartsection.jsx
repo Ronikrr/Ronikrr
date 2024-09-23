@@ -11,7 +11,7 @@ function Cartsection() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    const { cart, removecart } = useContext(Cartcontext);
+    const { cart, removeFromCart } = useContext(Cartcontext);
     const handleDecrease = () => {
         if (quantity > 1) {
             setQuantity(quantity - 1);
@@ -24,6 +24,7 @@ function Cartsection() {
     useEffect(() => {
         const fetchUserData = async () => {
             const accessToken = localStorage.getItem('access_token');
+            // const userId = localStorage.getItem('user_id'); 
             if (!accessToken) {
                 navigate("/login");
                 return;
@@ -122,7 +123,7 @@ function Cartsection() {
                                                     <td>{item.title}</td>
                                                     <td>Rs.{item.price * quantity}</td>
                                                 <td>
-                                                    <button className='border' onClick={() => removecart(item.id)}>
+                                                        <button className='border' onClick={() => removeFromCart(item.id)}>
                                                         <MdRemoveShoppingCart />
                                                     </button>
                                                     <button className='btn btn-primary ms-2'>Buy Now</button>

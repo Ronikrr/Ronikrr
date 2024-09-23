@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-
+// import { login } from './login'
 export const Cartcontext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -11,8 +11,12 @@ export const CartProvider = ({ children }) => {
     },[])
 
     const addtocart = (product) => {
-        setcart([...cart, product]);
-        localStorage.setItem("cart", JSON.stringify([...cart, product]));
+        const userId = localStorage.getItem('id')
+
+        const appededPro = { ...product, userId: userId }
+
+        setcart([...cart, appededPro]);
+        localStorage.setItem("cart", JSON.stringify([...cart, appededPro]));
     }
 
     const removecart = (productid) => {
