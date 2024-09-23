@@ -93,6 +93,7 @@ function Cartsection() {
                                                 <th>Product Name</th>
                                                 <th>Price</th>
                                                 <th>Image</th>
+                                                <th>Quantity</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
